@@ -10,4 +10,7 @@ jobs:
         with:
           node-version-file: package.json
       - name: Run Main
-        run: node main.js
+        run: |
+          node main.js
+          node -v
+          npm -v
