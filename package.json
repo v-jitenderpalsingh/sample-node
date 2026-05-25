@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/v-jitenderpalsingh/sample-node#readme",
   "engines": {
-    "node": "22.22.3"
+    "node": "^22"
   }, 
   "devEngines": {
     "packageManager": {
