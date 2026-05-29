@@ -1,0 +1,35 @@
+name: repro setup-node issue 1556
+
+on:
+  workflow_dispatch:
+
+jobs:
+  repro:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Show runner-baked Node before setup-node
+        run: |
+          which node
+          node --version
+
+      - name: Run setup-node
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24.15.0'
+
+      - name: Simulate bad toolPath/bin ahead of PATH
+        run: |
+          mkdir -p "$RUNNER_TEMP/fake-node/bin"
+          cat > "$RUNNER_TEMP/fake-node/bin/node" <<'SH'
+          #!/usr/bin/env sh
+          exit 127
+          SH
+          chmod +x "$RUNNER_TEMP/fake-node/bin/node"
+          echo "$RUNNER_TEMP/fake-node/bin" >> "$GITHUB_PATH"
+
+      - name: Demonstrate wrong resolution
+        run: |
+          echo "PATH=$PATH"
+          which -a node || true
+          node --version
