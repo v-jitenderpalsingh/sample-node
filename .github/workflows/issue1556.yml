@@ -1,26 +1,32 @@
-name: Issue 1556 Repro Workflow
-on: [workflow_dispatch]
+name: Repro setup-node #1556
+
+on: workflow_dispatch
 
 jobs:
-  repro:
-    runs-on: ubuntu-latest
+  issue1556:
+    runs-on: ubuntu-22.04
     steps:
-      - name: Show runner-baked Node version
-        run: node --version
-        
-      - name: Setup Node with network simulation
-        uses: actions/setup-node@v6
+      # Poison the toolcache with an empty directory for the requested version
+      - name: Simulate partial extract / failed download
+        run: |
+          version="22.12.0"
+          arch="x64"
+          tool_dir="$RUNNER_TOOL_CACHE/node/${version}/${arch}"
+          mkdir -p "${tool_dir}/bin"
+          touch "${tool_dir}.complete"   # marks the cache entry as "valid"
+          echo "Poisoned toolcache at ${tool_dir}"
+
+      - name: Setup Node (should request 22.x)
+        uses: actions/setup-node@v4
         with:
-          node-version: '24.15.0'
-        # In real scenario: transient network failure during download
-        
-      - name: Check Node version after setup-node
+          node-version: '22.12.0'
+
+      # Demonstrates the silent fallthrough — reports the runner-baked version
+      - name: Check actual node version
         run: |
-          echo "Expected: v24.15.0"
-          echo "Actual: $(node --version)"
-          
-      - name: This step will fail with confusing errors
-        run: |
-          # Test would fail here with ELIFECYCLE or native module errors
-          # instead of a clear "Node provisioning failed" message
-          node --version
+          echo "node path: $(which node)"
+          echo "node version: $(node --version)"
+          node --version | grep -q "v22.12.0" || {
+            echo "::error::Expected v22.12.0 but got $(node --version) — setup-node silently fell through!"
+            exit 1
+          }
