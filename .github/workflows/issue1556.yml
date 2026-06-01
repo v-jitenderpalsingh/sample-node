@@ -1,6 +1,6 @@
 name: Repro setup-node issue 1556
 
-on: workflow_dispatch
+on: [push, workflow_dispatch]
 
 jobs:
   test:
@@ -13,8 +13,8 @@ jobs:
           arch="x64"
           tool_dir="$RUNNER_TOOL_CACHE/node/${version}/${arch}"
           mkdir -p "${tool_dir}/bin"
+          touch "${tool_dir}.complete"   # marks the cache entry as "valid"
           echo "Poisoned toolcache at ${tool_dir}"
-          echo "$(ls -la "${tool_dir}")"
 
       - name: Setup Node
         uses: actions/setup-node@v6
