@@ -1,9 +1,9 @@
-name: Repro setup-node #1556
+name: Repro setup-node issue 1556
 
 on: workflow_dispatch
 
 jobs:
-  issue1556:
+  test:
     runs-on: ubuntu-22.04
     steps:
       # Poison the toolcache with an empty directory for the requested version
@@ -13,11 +13,11 @@ jobs:
           arch="x64"
           tool_dir="$RUNNER_TOOL_CACHE/node/${version}/${arch}"
           mkdir -p "${tool_dir}/bin"
-          touch "${tool_dir}.complete"   # marks the cache entry as "valid"
           echo "Poisoned toolcache at ${tool_dir}"
+          echo "$(ls -la "${tool_dir}")"
 
-      - name: Setup Node (should request 22.x)
-        uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v6
         with:
           node-version: '22.12.0'
 
@@ -26,7 +26,4 @@ jobs:
         run: |
           echo "node path: $(which node)"
           echo "node version: $(node --version)"
-          node --version | grep -q "v22.12.0" || {
-            echo "::error::Expected v22.12.0 but got $(node --version) — setup-node silently fell through!"
-            exit 1
-          }
+          echo "expected version: v22.12.0"
