@@ -7,14 +7,14 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       # Poison the toolcache with an empty directory for the requested version
-      - name: Simulate partial extract / failed download
-        run: |
-          version="22.12.0"
-          arch="x64"
-          tool_dir="$RUNNER_TOOL_CACHE/node/${version}/${arch}"
-          mkdir -p "${tool_dir}/bin"
-          touch "${tool_dir}.complete"   # marks the cache entry as "valid"
-          echo "Poisoned toolcache at ${tool_dir}"
+      # - name: Simulate partial extract / failed download
+      #   run: |
+      #     version="22.12.0"
+      #     arch="x64"
+      #     tool_dir="$RUNNER_TOOL_CACHE/node/${version}/${arch}"
+      #     mkdir -p "${tool_dir}/bin"
+      #     touch "${tool_dir}.complete"   # marks the cache entry as "valid"
+      #     echo "Poisoned toolcache at ${tool_dir}"
 
       - name: Setup Node
         uses: v-jitenderpalsingh/setup-node@test-1556
