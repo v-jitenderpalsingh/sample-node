@@ -17,7 +17,7 @@ jobs:
           echo "Poisoned toolcache at ${tool_dir}"
 
       - name: Setup Node
-        uses: v-jitenderpalsingh/setup-node@test-1556
+        uses: actions/setup-node@v6
         with:
           node-version: '22.12.0'
 
