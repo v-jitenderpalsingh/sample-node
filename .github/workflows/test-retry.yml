@@ -1,0 +1,19 @@
+name: Test retry logic for setup-node
+
+on: [push, workflow_dispatch]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Node
+        uses: v-jitenderpalsingh/setup-node@test-1556
+        with:
+          node-version: '10'
+
+      # Demonstrates the silent fallthrough — reports the runner-baked version
+      - name: Check actual node version
+        run: |
+          echo "node path: $(which node)"
+          echo "node version: $(node --version)"
+          echo "expected version: v22.12.0"
