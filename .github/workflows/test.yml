@@ -9,6 +9,9 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version-file: package.json
+        env:
+          npm_config_devEngines_override: true
+          
       - name: Run Main
         run: |
           node main.js
