@@ -16,7 +16,6 @@ jobs:
           node main.js
           node -v
           npm -v
-          npm install
-          
           npm install -g npm@^11.10.0
+          npm install
           npm -v
