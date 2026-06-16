@@ -1,5 +1,5 @@
 name: Solution Workflow
-on: [workflow_dispatch]
+on: [push, workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -9,10 +9,11 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version-file: package.json
+          package-manager-cache: false
       - name: Run Main
         run: |
           node main.js
           node -v
           npm -v
-          npm --global install npm@^11.10.0
+          npm install --global npm@^11.10.0
           npm -v
