@@ -9,7 +9,7 @@ jobs:
       - name: Setup Node
         uses: v-jitenderpalsingh/setup-node@test-retry
         with:
-          node-version: "24"
+          node-version: "24.15.0"
       - name: Print details
         run: |
           echo "Node version: $(node -v)"
