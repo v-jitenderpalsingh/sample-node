@@ -20,11 +20,5 @@
   "homepage": "https://github.com/v-jitenderpalsingh/sample-node#readme",
   "engines": {
     "node": "^22"
-  }, 
-  "devEngines": {
-    "packageManager": {
-      "name": "npm",
-      "version": "^11.10.0"
-    }
   }
 }
