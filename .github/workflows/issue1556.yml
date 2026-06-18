@@ -1,6 +1,6 @@
 name: Repro setup-node issue 1556
 
-on: [workflow_dispatch]
+on: [push, workflow_dispatch]
 
 jobs:
   test:
