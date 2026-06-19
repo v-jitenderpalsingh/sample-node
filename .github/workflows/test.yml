@@ -1,21 +1,18 @@
 name: Test Workflow
-on: [workflow_dispatch]
+on: [push, workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
       - name: Set up Node.js
-        uses: v-jitenderpalsingh/setup-node@test-1553
+        uses: v-jitenderpalsingh/setup-node@test-1556
         with:
-          node-version-file: package.json
+          node-version: '18.18.1'
 
       - name: Run Main
         run: |
           node main.js
           node -v
-          npm -v
-          npm install -g npm@^11.10.0
-          npm install
-          npm -v
+          
       
