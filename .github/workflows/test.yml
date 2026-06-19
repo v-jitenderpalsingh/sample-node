@@ -8,7 +8,7 @@ jobs:
       - name: Set up Node.js
         uses: v-jitenderpalsingh/setup-node@test-1556
         with:
-          node-version: '18.18.1'
+          node-version: '18.x'
 
       - name: Run Main
         run: |
