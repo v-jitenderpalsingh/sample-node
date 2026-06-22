@@ -8,7 +8,7 @@ jobs:
       - name: Set up Node.js
         uses: v-jitenderpalsingh/setup-node@test-retry
         with:
-          node-version: '21'
+          node-version: '12.16.2'
 
       - name: Run Main
         run: |
