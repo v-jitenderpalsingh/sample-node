@@ -94,7 +94,7 @@ jobs:
           echo "Resolved: ${{ steps.setup.outputs.node-version }}"
           node -v
 
-  retry-exhausted-falls-back-to-url:
+  retry-exhausted-falls-back-to-url-v6:
     name: API permanently down, expect raw-URL fallback
     runs-on: ubuntu-latest
     env:
