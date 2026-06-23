@@ -28,7 +28,7 @@ jobs:
         id: setup
         uses: v-jitenderpalsingh/setup-node@test-retry
         with:
-          node-version: '22'  
+          node-version: '21'  
 
 
       - name: Verify install succeeded
@@ -54,7 +54,7 @@ jobs:
         id: setup
         uses: v-jitenderpalsingh/setup-node@test-retry
         with:
-          node-version: '22'
+          node-version: '21'
 
       - name: Verify install succeeded via fallback
         run: |
@@ -86,7 +86,7 @@ jobs:
         id: setup
         uses: actions/setup-node@v6
         with:
-          node-version: '22'   
+          node-version: '21'   
 
 
       - name: Verify install succeeded
@@ -112,7 +112,7 @@ jobs:
         id: setup
         uses: actions/setup-node@v6
         with:
-          node-version: '22'
+          node-version: '21'
 
       - name: Verify install succeeded via fallback
         run: |
