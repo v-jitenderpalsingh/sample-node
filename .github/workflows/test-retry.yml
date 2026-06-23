@@ -1,16 +1,63 @@
-name: Test retry logic for setup-node
+name: Test Retry Branch
 
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
 
 jobs:
-  test:
+  retry-recovers:
+    name: API blackout, expect retry to recover
     runs-on: ubuntu-latest
+    env:
+      ACTIONS_STEP_DEBUG: true
     steps:
-      - name: Setup Node
-        uses: v-jitenderpalsingh/setup-node@test-retry
-        with:
-          node-version: "24.15.0"
-      - name: Print details
+      - uses: actions/checkout@v6
+
+      # Block api.github.com by pointing it to a loopback that drops :443.
+      # Attempt #1 fails immediately (connection refused). fetchValidManifest
+      # sleeps 1s, attempt #2 fails, it sleeps 2s. We restore DNS at t=2.5s
+      # so attempt #3 succeeds -- exercising the retry-with-backoff branch
+      # WITHOUT falling through to the raw-URL source.
+      - name: Start blackout (api.github.com -> 127.0.0.1)
         run: |
-          echo "Node version: $(node -v)"
-          echo "NPM version: $(npm -v)"
+          echo "127.0.0.1 api.github.com" | sudo tee -a /etc/hosts
+          ( sleep 3.5 && sudo sed -i '/127\.0\.0\.1 api\.github\.com/d' /etc/hosts && echo "RESTORED at $(date +%T.%N)" ) &
+          disown
+          echo "BLOCKED  at $(date +%T.%N)"
+
+      - name: Setup Node (force manifest fetch)
+        id: setup
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'   # range -> resolves to newest 20.x in manifest
+          check-latest: true       # forces getManifest() even if 20 is pre-installed
+
+      - name: Verify install succeeded
+        run: |
+          echo "Resolved: ${{ steps.setup.outputs.node-version }}"
+          node -v
+
+  retry-exhausted-falls-back-to-url:
+    name: API permanently down, expect raw-URL fallback
+    runs-on: ubuntu-latest
+    env:
+      ACTIONS_STEP_DEBUG: true
+    steps:
+      - uses: actions/checkout@v6
+
+      # Keep api.github.com unreachable for the whole run. fetchValidManifest
+      # burns all 3 attempts on the API source, getManifest() catches the error
+      # and falls back to raw.githubusercontent.com (still reachable).
+      - name: Permanent API blackout
+        run: echo "127.0.0.1 api.github.com" | sudo tee -a /etc/hosts
+
+      - name: Setup Node (must use URL fallback)
+        id: setup
+        uses: actions/setup-node@v6
+        with:
+          node-version: '20'
+          check-latest: true
+
+      - name: Verify install succeeded via fallback
+        run: |
+          echo "Resolved: ${{ steps.setup.outputs.node-version }}"
+          node -v
