@@ -17,14 +17,5 @@
   "bugs": {
     "url": "https://github.com/v-jitenderpalsingh/sample-node/issues"
   },
-  "homepage": "https://github.com/v-jitenderpalsingh/sample-node#readme",
-  "engines": {
-    "node": "^22"
-  },
-  "devEngines": {
-    "packageManager": {
-      "name": "npm",
-      "version": "10"
-    }
-  }
+  "homepage": "https://github.com/v-jitenderpalsingh/sample-node#readme"
 }
