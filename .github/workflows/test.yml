@@ -17,29 +17,17 @@ jobs:
       - name: Verify install succeeded
         run: |
           node -v
-  
-  test-v6:
-    name: Test v6
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Setup Node
+      
+      - name: setup node 18
         uses: v-jitenderpalsingh/setup-node@test-retry
         with:
           node-version: '18'
-
+      
       - name: Verify install succeeded
         run: |
           node -v
-
-  test-22:
-    name: Test 22
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Setup Node
+      
+      - name: setup node 22
         uses: v-jitenderpalsingh/setup-node@test-retry
         with:
           node-version: '22'
