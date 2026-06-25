@@ -1,6 +1,6 @@
 name: Test workflow
 
-on: [workflow_dispatch]
+on: [push, workflow_dispatch]
 
 jobs:
   test-retry:
@@ -12,7 +12,7 @@ jobs:
       - name: Setup Node
         uses: v-jitenderpalsingh/setup-node@test-retry
         with:
-          node-version: 'lts/erbium'
+          node-version: '20'
 
       - name: Verify install succeeded
         run: |
@@ -25,9 +25,24 @@ jobs:
       - uses: actions/checkout@v6
 
       - name: Setup Node
-        uses: actions/setup-node@v6
+        uses: v-jtienderpalsingh/setup-node@test-retry
         with:
-          node-version: 'lts/erbium'
+          node-version: '18'
+
+      - name: Verify install succeeded
+        run: |
+          node -v
+
+  test-22:
+    name: Test 22
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Node
+        uses: v-jitenderpalsingh/setup-node@test-retry
+        with:
+          node-version: '22'
 
       - name: Verify install succeeded
         run: |
