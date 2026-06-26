@@ -3,35 +3,24 @@ name: Test workflow
 on: [push, workflow_dispatch]
 
 jobs:
-  test-retry:
-    name: Test
+  multi-node:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-
-      - name: Setup Node
+      - uses: actions/checkout@v4
+      - name: Install Node 20
         uses: v-jitenderpalsingh/setup-node@test-retry
         with:
           node-version: '20'
 
-      - name: Verify install succeeded
+      - name: Confirm Node 20 is active
         run: |
-          node -v
-      
-      - name: setup node 18
-        uses: v-jitenderpalsingh/setup-node@test-retry
-        with:
-          node-version: '18'
-      
-      - name: Verify install succeeded
-        run: |
-          node -v
-      
-      - name: setup node 22
+          echo "node is: $(which node)"
+          node --version  
+
+      - name: Persist Node 20 on PATH via $GITHUB_ENV
+        run: echo "PATH=$PATH" >> "$GITHUB_ENV"
+
+      - name: Install Node 22 (expected to FAIL verifyNodeVersion)
         uses: v-jitenderpalsingh/setup-node@test-retry
         with:
           node-version: '22'
-
-      - name: Verify install succeeded
-        run: |
-          node -v
