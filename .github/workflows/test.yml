@@ -26,6 +26,6 @@ jobs:
           which node          
           node --version      
       - name: Install Node 20 (FAILS verification)
-        uses: ./
+        uses: v-jitenderpalsingh/setup-node@test-retry
         with:
           node-version: '20'
