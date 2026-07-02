@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Setup Node
-        uses: HarithaVattikuti/setup-node@575b30bc3956dc571c4abc86e539ddcaca702dbe
+        uses: HarithaVattikuti/setup-node@b983d7404f95e4d7ba3fdbd33b6f42b9e7a8c3a8
         with:
           node-version: '24'
 
