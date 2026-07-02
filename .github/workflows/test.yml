@@ -1,31 +1,13 @@
 name: Test workflow
 
-on: [workflow_dispatch]
+on: [push, workflow_dispatch]
 
 jobs:
-  fake-node:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - name: Install a fake node shim ahead on PATH
-        run: |
-          mkdir -p "$HOME/fakebin"
-          cat > "$HOME/fakebin/node" <<'EOF'
-          #!/usr/bin/env bash
-          if [[ "$1" == "--version" ]]; then
-            echo "v18.0.0"
-            exit 0
-          fi
-          exec /usr/bin/env -i bash -c 'echo "fake node"'
-          EOF
-          chmod +x "$HOME/fakebin/node"
-          echo "$HOME/fakebin" >> "$GITHUB_PATH"
-
-      - name: Confirm fake node is winning on PATH
-        run: |
-          which node          
-          node --version      
-      - name: Install Node 20 (FAILS verification)
+      - name: Setup Node
         uses: v-jitenderpalsingh/setup-node@test-retry
         with:
-          node-version: '20'
+          node-version: '24'
