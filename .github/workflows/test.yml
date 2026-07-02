@@ -8,6 +8,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Setup Node
+        id: setup-node
         uses: gowridurgad/setup-node@cachekey-output
         with:
           node-version: '24'
