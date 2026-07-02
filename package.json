@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/v-jitenderpalsingh/sample-node/issues"
   },
-  "homepage": "https://github.com/v-jitenderpalsingh/sample-node#readme"
+  "homepage": "https://github.com/v-jitenderpalsingh/sample-node#readme",
+  "dependencies": {
+    "bootstrap": "^5.3.8"
+  }
 }
