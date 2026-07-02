@@ -11,7 +11,7 @@ jobs:
         id: setup-node
         uses: gowridurgad/setup-node@cachekey-output
         with:
-          node-version: '24'
+          node-version: '24.11'
           cache: 'npm'
       
       - name: Check output
@@ -21,4 +21,3 @@ jobs:
             echo "cache-primary-key:  ${{ steps.setup-node.outputs.cache-primary-key }}"
             echo "cache-matched-key:  ${{ steps.setup-node.outputs.cache-matched-key }}"
 
-            
