@@ -1,0 +1,15 @@
+name: Verify Node Version Validation
+on: [push, workflow_dispatch]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Node
+        uses: HarithaVattikuti/setup-node@575b30bc3956dc571c4abc86e539ddcaca702dbe
+        with:
+          node-version: '24'
+
+      - name: Check actual node version
+        run: |
+          node --version
