@@ -8,6 +8,8 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Setup Node
-        uses: v-jitenderpalsingh/setup-node@test-retry
+        uses: gowridurgad/setup-node@cachekey-output
         with:
           node-version: '24'
+          cache: 'npm'
+          
