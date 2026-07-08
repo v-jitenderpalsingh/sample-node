@@ -10,7 +10,7 @@ jobs:
     env:
       ACTIONS_STEP_DEBUG: true
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       # Block api.github.com by pointing it to a loopback that drops :443.
       # Attempt #1 fails immediately (connection refused). fetchValidManifest
@@ -26,7 +26,7 @@ jobs:
 
       - name: Setup Node (force manifest fetch)
         id: setup
-        uses: v-jitenderpalsingh/setup-node@test-retry
+        uses: v-jitenderpalsingh/setup-node@check-pr
         with:
           node-version: '21'  
 
@@ -42,7 +42,7 @@ jobs:
     env:
       ACTIONS_STEP_DEBUG: true
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       # Keep api.github.com unreachable for the whole run. fetchValidManifest
       # burns all 3 attempts on the API source, getManifest() catches the error
@@ -52,7 +52,7 @@ jobs:
 
       - name: Setup Node (must use URL fallback)
         id: setup
-        uses: v-jitenderpalsingh/setup-node@test-retry
+        uses: v-jitenderpalsingh/setup-node@check-pr
         with:
           node-version: '21'
 
@@ -63,12 +63,12 @@ jobs:
 
 
   retry-recovers-v6:
-    name: API blackout, expect retry to recover
+    name: API blackout, expect retry to recover v6
     runs-on: ubuntu-latest
     env:
       ACTIONS_STEP_DEBUG: true
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       # Block api.github.com by pointing it to a loopback that drops :443.
       # Attempt #1 fails immediately (connection refused). fetchValidManifest
@@ -95,12 +95,12 @@ jobs:
           node -v
 
   retry-exhausted-falls-back-to-url-v6:
-    name: API permanently down, expect raw-URL fallback
+    name: API permanently down, expect raw-URL fallback v6
     runs-on: ubuntu-latest
     env:
       ACTIONS_STEP_DEBUG: true
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
 
       # Keep api.github.com unreachable for the whole run. fetchValidManifest
       # burns all 3 attempts on the API source, getManifest() catches the error
