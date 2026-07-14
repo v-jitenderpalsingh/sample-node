@@ -1,6 +1,6 @@
 name: Repro setup-node issue 1556
 
-on: [workflow_dispatch]
+on: [push, workflow_dispatch]
 
 jobs:
   test:
@@ -17,7 +17,7 @@ jobs:
           echo "Poisoned toolcache at ${tool_dir}"
 
       - name: Setup Node
-        uses: v-jitenderpalsingh/setup-node@test-retry
+        uses: v-jitenderpalsingh/setup-node@node-validate-retry
         with:
           node-version: '22.12.0'
 
