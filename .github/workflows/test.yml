@@ -15,7 +15,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '25-nightly'
+          node-version: 'nightly'
           package-manager-cache: false
       
       - run: node --version
