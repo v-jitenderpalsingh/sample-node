@@ -1,39 +1,21 @@
-name: yarn-berry partial match
+name: Test Node nigtly build
 
-on: [workflow_dispatch]
+on: [push, workflow_dispatch]
 
 jobs:
   demo:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
     steps:
       - uses: actions/checkout@v7
 
-      - name: Create tiny Yarn Berry (PnP) project
-        run: |
-          mkdir demo && cd demo
-          echo '{ "name":"d", "packageManager":"yarn@3.6.4", "dependencies":{ "lodash":"4.17.21" } }' > package.json
-          touch yarn.lock
-          corepack enable
-          yarn config set nodeLinker pnp
-          yarn config set enableGlobalCache false          # ← the missing piece
-          YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install
-
-      - name: Bump dep on every other run to force a new primary key
-        working-directory: demo
-        run: |
-          if [ "$((RANDOM % 2))" = "0" ]; then
-            YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn add lodash@4.17.20
-          fi
-
-      - uses: gowridurgad/setup-node@cachekey-output
-        id: node
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
-          node-version: 20
-          cache: yarn
-          cache-dependency-path: demo/yarn.lock
-
-      - run: |
-          echo "primary = ${{ steps.node.outputs.cache-primary-key }}"
-          echo "matched = ${{ steps.node.outputs.cache-matched-key }}"
-          echo "hit     = ${{ steps.node.outputs.cache-hit }}"
-          
+          node-version: '25-nightly'
+          package-manager-cache: false
+      
+      - run: node --version
