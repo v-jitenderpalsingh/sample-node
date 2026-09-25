@@ -1,6 +1,9 @@
 name: Test Node
 
 on: [push, workflow_dispatch]
+defaults:
+  run:
+    shell: bash
 
 jobs:
   demo:
@@ -17,8 +20,13 @@ jobs:
         with:
           node-version: '24'
       
-      - run: |
+      - name: Run Node and NPM commands
+        run: |
           node --version
+          cd ..
           ls -la
           npm config get userconfig
+
+      - name: Run npm ci
+        run: |
           npm ci
