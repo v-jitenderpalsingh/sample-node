@@ -1,4 +1,4 @@
-name: Test Node nigtly build
+name: Test Node
 
 on: [push, workflow_dispatch]
 
@@ -13,9 +13,12 @@ jobs:
       - uses: actions/checkout@v7
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@main
         with:
-          node-version: '27-nightly'
-          package-manager-cache: false
+          node-version: '24'
       
-      - run: node --version
+      - run: |
+          node --version
+          ls -la
+          npm config get userconfig
+          npm ci
