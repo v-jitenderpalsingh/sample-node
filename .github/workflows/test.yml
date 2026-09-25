@@ -24,8 +24,8 @@ jobs:
         run: |
           node --version
           cd "$HOME"
-          ls -la
           npm config get userconfig
+          npm config get audit
 
       - name: Run npm ci
         run: |
