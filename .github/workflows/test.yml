@@ -23,7 +23,7 @@ jobs:
       - name: Run Node and NPM commands
         run: |
           node --version
-          cd ../../..
+          cd "$HOME"
           ls -la
           npm config get userconfig
 
