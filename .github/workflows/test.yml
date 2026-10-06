@@ -23,10 +23,15 @@ jobs:
       - name: Run Node and NPM commands
         run: |
           node --version
-          cd "$HOME"
           npm config get userconfig
           npm config get audit
 
       - name: Run npm ci
         run: |
           npm ci
+      
+      - name: Set audit as false
+        run: npm set audit false
+
+      - name: Run npm ci
+        run: npm ci
