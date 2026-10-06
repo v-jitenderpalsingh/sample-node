@@ -34,4 +34,6 @@ jobs:
         run: npm set audit false
 
       - name: Run npm ci
-        run: npm ci
+        run: |
+          npm ci
+          npm config get audit
