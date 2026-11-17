@@ -1,0 +1,27 @@
+name: Test mise file
+
+on: [push, workflow_dispatch]
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install Node
+        uses: actions/setup-node@main
+        with:
+          node-version-file: mise.toml
+      
+      - name: Verify Node installation
+        run: |
+          node --version
+          npm --version
