@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-slim, ubuntu-24.04]
+        os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
       - uses: actions/checkout@main
 
@@ -25,3 +25,10 @@ jobs:
         run: |
           node --version
           npm --version
+          npm ci
+
+      - name: Again setup node
+        uses: actions/setup-node@main
+        with:
+          node-version: '24'
+          cache: 'npm'
